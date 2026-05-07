@@ -75,6 +75,7 @@ const handleDownload = async () => {
 
     await dbLocal.videoFiles.put({
       id: ressource.id,
+      coursId: ressource.coursId, // 🎯 AJOUTE CETTE LIGNE (vérifie le nom de ta variable d'ID de cours)
       blob,
       size: blob.size,
       createdAt: Date.now(),
@@ -88,9 +89,11 @@ const handleDownload = async () => {
     toast.success("Vidéo offline prête ✔");
   } catch (e) {
     setDownloadStatus("NOT_DOWNLOADED");
+    console.error(e); // Pour voir l'erreur précise en console
     toast.error("Erreur téléchargement");
   }
 };
+
 
 // const handleDownload = async () => {
 
