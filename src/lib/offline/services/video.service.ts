@@ -18,6 +18,7 @@ export async function downloadVideo(videoId: string, url: string, meta?: any) {
     await dbLocal.videoFiles.put({
       id: videoId,
       blob,
+      coursId: meta?.coursId || video.coursId || "unknown", 
       size: blob.size,
       createdAt: Date.now(),
     });
