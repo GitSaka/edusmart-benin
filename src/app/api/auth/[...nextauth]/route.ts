@@ -1,4 +1,8 @@
-import { handlers } from "@/lib/auth"; // Vérifie que ton fichier auth.ts est bien là
-export const { GET, POST } = handlers;
+import { handlers } from "@/lib/auth"
 
-export const dynamic = "force-dynamic";
+// 🔥 important pour Vercel
+export const runtime = "nodejs"
+export const dynamic = "force-dynamic"
+export const fetchCache = "force-no-store"
+
+export const { GET, POST } = handlers
