@@ -11,6 +11,10 @@ export default function LoginPage() {
   const [isPending, startTransition] = useTransition();
   const [showSuperAdminModal, setShowSuperAdminModal] = useState(false);
 
+  const [ecoleCode, setEcoleCode] = useState("");
+  const [identifier, setIdentifier] = useState("");
+  const [password, setPassword] = useState("");
+
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -26,6 +30,24 @@ export default function LoginPage() {
       }
     });
   };
+
+  // 🎯 ÉTAPE 2 : LA FONCTION DE REMPLISSAGE SANS ERREURS
+  const handleDemoLogin = (selectedRole: 'ADMIN' | 'STUDENT') => {
+    setEcoleCode('CE001'); // Remplace par le vrai code école de ta BD
+    
+    setRole(selectedRole);
+    
+    if (selectedRole === 'ADMIN') {
+      setIdentifier('admin@edusmart.com'); // Remplace par le vrai username de ta BD
+      setPassword('admin123');
+      
+    } else {
+      setIdentifier('2026-CE001-0002'); // Remplace par le vrai username de ta BD
+      setPassword('123456');
+      
+    }
+  };
+
 
   return (
     <div className="min-h-screen bg-[#F8FAFC] flex items-center justify-center p-2 md:p-8">
@@ -84,6 +106,8 @@ export default function LoginPage() {
                   <button disabled={isPending} type="submit" className="w-full bg-gray-900 text-white py-5 rounded-[2rem] font-black text-xs uppercase tracking-widest shadow-xl hover:bg-black active:scale-95 transition-all flex items-center justify-center gap-3">
                     {isPending ? <RefreshCcw className="animate-spin" size={18} /> : "Vérifier l'accès"}
                   </button>
+
+           
                 </form>
               </div>
             </div>
@@ -141,6 +165,8 @@ export default function LoginPage() {
                 required
                 type="text" 
                 name="ecoleCode"
+                value={ecoleCode}
+                onChange={(e) => setEcoleCode(e.target.value)}
                 placeholder="Code École (ex: CE001)"
                 className="w-full pl-14 pr-6 py-5 bg-primary/5 border-2 border-transparent focus:border-primary/20 rounded-[1.5rem] text-sm font-black uppercase placeholder:normal-case outline-none transition-all"
               />
@@ -154,6 +180,8 @@ export default function LoginPage() {
                 required
                 type="text" 
                 name="identifier"
+                value={identifier}
+                onChange={(e) => setIdentifier(e.target.value)}
                 placeholder={role === "STUDENT" ? "Matricule élève" : role === "PARENT" ? "Téléphone" : "Identifiant"}
                 className="w-full pl-14 pr-6 py-5 bg-gray-50 border-none rounded-[1.5rem] text-sm font-bold outline-none focus:ring-4 focus:ring-primary/5 transition-all"
               />
@@ -167,6 +195,8 @@ export default function LoginPage() {
                 required
                 type="password" 
                 name="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
                 placeholder="Mot de passe"
                 className="w-full pl-14 pr-6 py-5 bg-gray-50 border-none rounded-[1.5rem] text-sm font-bold outline-none focus:ring-4 focus:ring-primary/5 transition-all"
               />
@@ -184,6 +214,28 @@ export default function LoginPage() {
               <>Accéder au portail <ArrowRight size={18} /></>
             )}
           </button>
+                       {/* 🎯 ÉTAPE 3 : AJOUT DES BOUTONS DE DÉMO DANS TON DESIGN SANS BRUIT VISUEL */}
+                <div className="pt-4 border-t border-gray-100 text-center space-y-3">
+                  <p className="text-[9px] font-black uppercase tracking-widest text-gray-400">
+                    Accès Démo Recruteur
+                  </p>
+                  <div className="flex gap-2 justify-center">
+                    <button
+                      type="button"
+                      onClick={() => handleDemoLogin('ADMIN')}
+                      className="px-4 py-2 bg-gray-900 text-white rounded-xl text-[9px] font-black uppercase tracking-wider hover:bg-purple-600 transition-all shadow-sm"
+                    >
+                      🔑 Directeur (Admin)
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => handleDemoLogin('STUDENT')}
+                      className="px-4 py-2 bg-purple-50 text-purple-600 border border-purple-100 rounded-xl text-[9px] font-black uppercase tracking-wider hover:bg-purple-100 transition-all"
+                    >
+                      🔑 Student
+                    </button>
+                  </div>
+                </div>
           
           <div className="text-center">
             <button type="button" className="text-[10px] font-black text-gray-300 uppercase hover:text-primary transition-colors cursor-pointer">
